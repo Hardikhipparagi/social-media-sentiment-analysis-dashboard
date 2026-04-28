@@ -29,3 +29,10 @@ joblib.dump(vectorizer, "models/vectorizer.pkl")
 # Evaluate
 y_pred = model.predict(X_test_vec)
 print("Accuracy:", accuracy_score(y_test, y_pred))
+
+df = pd.read_csv("data/sample_data.csv")
+
+# If sentiment column missing → create dummy labels
+if "sentiment" not in df.columns:
+    labels = ["positive", "negative", "neutral"]
+    df["sentiment"] = [labels[i % 3] for i in range(len(df))]
