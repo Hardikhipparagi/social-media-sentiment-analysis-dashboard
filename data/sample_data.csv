@@ -4,3 +4,39 @@ Worst experience ever,negative
 It's okay,neutral
 Amazing service,positive
 Terrible support,negative
+
+# ----------------------------
+# 🔥 WORD CLOUD
+# ----------------------------
+st.subheader("☁️ Word Cloud")
+
+all_text = " ".join(df["text"].astype(str))
+
+wordcloud = WordCloud(width=800, height=400, background_color='white').generate(all_text)
+
+fig_wc, ax = plt.subplots()
+ax.imshow(wordcloud, interpolation='bilinear')
+ax.axis("off")
+
+st.pyplot(fig_wc)
+
+# ----------------------------
+# 🔥 TOP KEYWORDS
+# ----------------------------
+st.subheader("🔍 Top Keywords")
+
+words = all_text.split()
+common_words = Counter(words).most_common(10)
+
+keywords_df = pd.DataFrame(common_words, columns=["Word", "Frequency"])
+
+st.dataframe(keywords_df)
+
+fig_bar = px.bar(
+    keywords_df,
+    x="Word",
+    y="Frequency",
+    title="Top 10 Keywords"
+)
+
+st.plotly_chart(fig_bar)
